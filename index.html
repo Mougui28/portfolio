@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dylan Amougui — Développeur web full-stack</title>
+    <meta
+      name="description"
+      content="Dylan Amougui, développeur web full-stack en remote. Interfaces React / Next.js, APIs Node.js et Laravel, bases de données MySQL."
+    />
+    <meta name="theme-color" content="#08090b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dylan Amougui — Développeur web full-stack" />
+    <meta
+      property="og:description"
+      content="Interfaces React / Next.js, APIs Node.js et Laravel, bases de données MySQL."
+    />
+    <meta property="og:image" content="assets/proj-frontend.webp" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div class="scroll-progress" aria-hidden="true"><span id="progressBar"></span></div>
+    <canvas id="fieldCanvas" class="field-canvas" aria-hidden="true"></canvas>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="header" id="header">
+      <div class="header__inner">
+        <a class="brand" href="#top" aria-label="Dylan Amougui — accueil">
+          <svg
+            class="brand__mark"
+            width="30"
+            height="30"
+            viewBox="0 0 32 32"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M6 26V6h7.5c6.9 0 11 3.8 11 10s-4.1 10-11 10H6Z"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linejoin="round"
+            />
+            <path d="M13 11.5 17.5 16 13 20.5" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="brand__text">Dylan<span class="brand__dot">.</span>A</span>
+        </a>
+
+        <nav class="nav" aria-label="Navigation principale">
+          <a href="#projets">Projets</a>
+          <a href="#services">Services</a>
+          <a href="#stack">Stack</a>
+          <a href="#parcours">Parcours</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="header__actions">
+          <button
+            class="icon-btn"
+            data-theme-toggle
+            type="button"
+            aria-label="Passer en mode clair"
+          ></button>
+          <a class="btn btn--ghost header__cta" href="#contact" data-magnetic>Me contacter</a>
+          <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </div>
+      <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
+        <a href="#projets">Projets</a>
+        <a href="#services">Services</a>
+        <a href="#stack">Stack</a>
+        <a href="#parcours">Parcours</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div class="hero__inner">
+          <p class="eyebrow reveal">
+            <span class="pulse" aria-hidden="true"></span>
+            Disponible pour de nouveaux projets — 100&nbsp;% remote
+          </p>
+
+          <h1 class="hero__title">
+            <span class="line"><span data-scramble>Je construis</span></span>
+            <span class="line"><em data-scramble>des interfaces</em></span>
+            <span class="line"><span data-scramble>qui répondent vite.</span></span>
+          </h1>
+
+          <div class="hero__meta">
+            <p class="hero__lede reveal">
+              Développeur web full-stack. Je dessine le front en <strong>React&nbsp;/ Next.js</strong>,
+              je branche l'API en <strong>Node.js</strong> ou <strong>Laravel</strong>, et je modélise
+              les données en <strong>MySQL</strong>. Du schéma de base jusqu'au dernier pixel.
+            </p>
+            <div class="hero__cta reveal">
+              <a class="btn btn--solid" href="#projets" data-magnetic>Voir les projets</a>
+              <a class="btn btn--ghost" href="https://github.com/Mougui28" target="_blank" rel="noopener" data-magnetic>
+                GitHub
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+              <a class="btn btn--line" href="cv-dylan-amougui.pdf" download data-magnetic>
+                Télécharger le CV
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__ticker" aria-hidden="true">
+          <div class="ticker__track">
+            <span>React</span><i></i><span>Next.js</span><i></i><span>TypeScript</span><i></i>
+            <span>Node.js</span><i></i><span>Laravel</span><i></i><span>MySQL</span><i></i>
+            <span>Vite</span><i></i><span>Docker</span><i></i><span>REST API</span><i></i>
+            <span>React</span><i></i><span>Next.js</span><i></i><span>TypeScript</span><i></i>
+            <span>Node.js</span><i></i><span>Laravel</span><i></i><span>MySQL</span><i></i>
+            <span>Vite</span><i></i><span>Docker</span><i></i><span>REST API</span><i></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATS / A PROPOS -->
+      <section class="about" id="apropos">
+        <div class="about__bg" aria-hidden="true">
+          <img src="assets/about-texture.webp" alt="" loading="lazy" decoding="async" width="1600" height="854" />
+        </div>
+        <div class="wrap about__grid">
+          <div class="about__text">
+            <h2 class="section-title reveal">Ce que je fais<br />concrètement</h2>
+            <p class="reveal">
+              Je travaille sur toute la chaîne : modélisation des tables, écriture des endpoints,
+              gestion de l'authentification, puis construction d'une interface qui reste lisible
+              quand les données arrivent en masse.
+            </p>
+            <p class="reveal">
+              Mon terrain de jeu actuel, c'est <strong>Taskapp</strong> — une application de gestion
+              de tâches que je développe en deux parties séparées : une API Laravel adossée à MySQL,
+              et un client React monté sur Vite. Deux dépôts, un seul produit.
+            </p>
+            <ul class="about__list reveal" role="list">
+              <li><span class="k">01</span> Architecture front &amp; découpage des composants</li>
+              <li><span class="k">02</span> APIs REST, authentification, migrations de schéma</li>
+              <li><span class="k">03</span> Performance, accessibilité, responsive réel</li>
+              <li><span class="k">04</span> Déploiement conteneurisé et mise en ligne</li>
+            </ul>
+          </div>
+
+          <div class="stats">
+            <div class="stat reveal">
+              <span class="stat__num" data-count="2" data-suffix="">0</span>
+              <span class="stat__label">dépôts publics en production active</span>
+            </div>
+            <div class="stat reveal">
+              <span class="stat__num" data-count="6" data-suffix="+">0</span>
+              <span class="stat__label">technologies maîtrisées au quotidien</span>
+            </div>
+            <div class="stat stat--wide reveal">
+              <span class="stat__num" data-count="24" data-suffix="h">0</span>
+              <span class="stat__label">délai de réponse moyen</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJETS -->
+      <section class="projects" id="projets">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="tag">Travaux sélectionnés</span>
+            <h2 class="section-title reveal">Projets</h2>
+          </div>
+
+          <article class="project reveal" data-tilt>
+            <a class="project__media" href="https://github.com/Mougui28/Taskapp_frotend" target="_blank" rel="noopener">
+              <img src="assets/proj-frontend.webp" alt="Interface sombre d'application de gestion de tâches avec colonnes kanban et graphiques" loading="lazy" decoding="async" width="1200" height="800" />
+              <span class="project__index">01</span>
+            </a>
+            <div class="project__body">
+              <h3 class="project__title">Taskapp — Client React</h3>
+              <p class="project__desc">
+                Le front de Taskapp : un client React monté avec Vite, rechargement à chaud,
+                linting Oxlint, structure de composants pensée pour accueillir un board de tâches
+                filtrable. L'objectif était un bundle léger et un temps de démarrage quasi instantané
+                en développement.
+              </p>
+              <ul class="chips" role="list">
+                <li>React</li><li>Vite</li><li>JavaScript</li><li>Oxlint</li><li>HMR</li>
+              </ul>
+              <div class="project__links">
+                <a class="project__cta" href="taskapp.html" data-magnetic>
+                  Lire l'étude de cas
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="https://github.com/Mougui28/Taskapp_frotend" target="_blank" rel="noopener" data-magnetic>
+                  Voir le dépôt
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project project--flip reveal" data-tilt>
+            <a class="project__media" href="https://github.com/Mougui28/Taskapp" target="_blank" rel="noopener">
+              <img src="assets/proj-backend.webp" alt="Schéma lumineux d'une architecture API reliée à plusieurs bases de données" loading="lazy" decoding="async" width="1200" height="800" />
+              <span class="project__index">02</span>
+            </a>
+            <div class="project__body">
+              <h3 class="project__title">Taskapp — API Laravel</h3>
+              <p class="project__desc">
+                Le cœur applicatif : une API Laravel qui expose les tâches, gère le routage, l'ORM
+                Eloquent et les migrations de schéma vers MySQL. Le projet est conteneurisé via un
+                Dockerfile et couvert par PHPUnit, pour pouvoir déployer sans surprise.
+              </p>
+              <ul class="chips" role="list">
+                <li>Laravel</li><li>PHP</li><li>MySQL</li><li>Docker</li><li>PHPUnit</li>
+              </ul>
+              <div class="project__links">
+                <a class="project__cta" href="taskapp.html#api" data-magnetic>
+                  Lire l'étude de cas
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="https://github.com/Mougui28/Taskapp" target="_blank" rel="noopener" data-magnetic>
+                  Voir le dépôt
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="services" id="services">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="tag">Prestations</span>
+            <h2 class="section-title reveal">Comment je peux<br />vous aider</h2>
+          </div>
+
+          <div class="services__grid">
+            <article class="service reveal">
+              <span class="service__num">01</span>
+              <h3>Application web sur mesure</h3>
+              <p>
+                Un produit complet, du schéma de base de données à l'interface : authentification,
+                rôles, tableaux de bord, gestion de contenu. Livré en ligne, documenté, reprenable
+                par une autre équipe.
+              </p>
+              <ul class="service__meta" role="list">
+                <li><b>Délai type</b><span>4 à 10 semaines</span></li>
+                <li><b>Stack</b><span>React / Next.js + Laravel ou Node</span></li>
+              </ul>
+            </article>
+
+            <article class="service reveal">
+              <span class="service__num">02</span>
+              <h3>Site vitrine &amp; landing page</h3>
+              <p>
+                Un site rapide, responsive et bien référencé. Pas de constructeur bloquant :
+                du code propre que vous gardez, hébergeable gratuitement, avec un formulaire de
+                contact qui arrive vraiment dans votre boîte.
+              </p>
+              <ul class="service__meta" role="list">
+                <li><b>Délai type</b><span>1 à 3 semaines</span></li>
+                <li><b>Inclus</b><span>SEO de base, responsive, analytics</span></li>
+              </ul>
+            </article>
+
+            <article class="service reveal">
+              <span class="service__num">03</span>
+              <h3>API &amp; back-end</h3>
+              <p>
+                Conception d'une API REST propre : modélisation relationnelle, migrations
+                versionnées, validation, authentification et gestion des erreurs. Conteneurisée
+                avec Docker pour un déploiement reproductible.
+              </p>
+              <ul class="service__meta" role="list">
+                <li><b>Délai type</b><span>2 à 6 semaines</span></li>
+                <li><b>Stack</b><span>Laravel / Node.js + MySQL</span></li>
+              </ul>
+            </article>
+
+            <article class="service reveal">
+              <span class="service__num">04</span>
+              <h3>Reprise de projet existant</h3>
+              <p>
+                Votre application est bloquée, lente, ou son développeur est parti. Je fais un audit
+                du code, je documente ce qui existe, puis je corrige, optimise et remets le projet
+                sur des rails.
+              </p>
+              <ul class="service__meta" role="list">
+                <li><b>Première étape</b><span>Audit sous 5 jours</span></li>
+                <li><b>Livrable</b><span>Rapport + plan d'action chiffré</span></li>
+              </ul>
+            </article>
+          </div>
+
+          <p class="services__note reveal">
+            Chaque projet commence par un échange gratuit pour cadrer le besoin. Vous repartez avec
+            une approche technique et une estimation, même si nous ne travaillons pas ensemble.
+          </p>
+        </div>
+      </section>
+
+      <!-- STACK -->
+      <section class="stack" id="stack">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="tag">Outils</span>
+            <h2 class="section-title reveal">Stack technique</h2>
+          </div>
+
+          <div class="stack__grid">
+            <div class="stack__col reveal">
+              <h3>Front-end</h3>
+              <ul role="list">
+                <li><span>React</span><b data-bar="92"><i></i></b></li>
+                <li><span>Next.js</span><b data-bar="84"><i></i></b></li>
+                <li><span>TypeScript</span><b data-bar="78"><i></i></b></li>
+                <li><span>CSS moderne</span><b data-bar="88"><i></i></b></li>
+              </ul>
+            </div>
+            <div class="stack__col reveal">
+              <h3>Back-end</h3>
+              <ul role="list">
+                <li><span>Node.js</span><b data-bar="85"><i></i></b></li>
+                <li><span>Laravel / PHP</span><b data-bar="80"><i></i></b></li>
+                <li><span>REST API</span><b data-bar="90"><i></i></b></li>
+                <li><span>Auth &amp; sécurité</span><b data-bar="74"><i></i></b></li>
+              </ul>
+            </div>
+            <div class="stack__col reveal">
+              <h3>Données &amp; outils</h3>
+              <ul role="list">
+                <li><span>MySQL</span><b data-bar="86"><i></i></b></li>
+                <li><span>Git / GitHub</span><b data-bar="90"><i></i></b></li>
+                <li><span>Docker</span><b data-bar="70"><i></i></b></li>
+                <li><span>Vite</span><b data-bar="88"><i></i></b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARCOURS -->
+      <section class="timeline-sec" id="parcours">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="tag">Trajectoire</span>
+            <h2 class="section-title reveal">Parcours</h2>
+          </div>
+          <ol class="timeline" role="list">
+            <li class="reveal">
+              <span class="timeline__year">Aujourd'hui</span>
+              <h3>Développeur web full-stack — indépendant</h3>
+              <p>Conception et développement d'applications web complètes, du schéma MySQL à l'interface React. Je travaille exclusivement en remote.</p>
+            </li>
+            <li class="reveal">
+              <span class="timeline__year">Projet Taskapp</span>
+              <h3>Architecture découplée API / client</h3>
+              <p>Séparation stricte du back Laravel et du front React, communication par API REST, conteneurisation Docker et tests automatisés.</p>
+            </li>
+            <li class="reveal">
+              <span class="timeline__year">Fondations</span>
+              <h3>Du HTML brut au full-stack</h3>
+              <p>Apprentissage par la pratique : JavaScript, puis les frameworks, puis le back-end et la modélisation de données relationnelles.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="contact" id="contact">
+        <div class="wrap contact__grid">
+          <div class="contact__intro">
+            <h2 class="contact__title">
+              <span data-scramble>Un projet</span><br /><em data-scramble>en tête ?</em>
+            </h2>
+            <p class="reveal">
+              Écrivez-moi la version courte de votre idée. Je réponds avec une première approche
+              technique et une estimation honnête, sous 24&nbsp;h.
+            </p>
+            <a class="mail" href="mailto:amouguid771@gmail.com" data-magnetic>
+              amouguid771@gmail.com
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <div class="contact__links">
+              <a href="https://github.com/Mougui28" target="_blank" rel="noopener">GitHub</a>
+              <a href="cv-dylan-amougui.pdf" download>CV (PDF)</a>
+            </div>
+          </div>
+
+          <form class="form reveal" id="contactForm" novalidate>
+            <div class="field">
+              <label for="f-name">Nom</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Votre nom" />
+              <span class="field__error" data-error-for="f-name"></span>
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="vous@exemple.com" />
+              <span class="field__error" data-error-for="f-email"></span>
+            </div>
+            <div class="field">
+              <label for="f-budget">Type de projet</label>
+              <select id="f-budget" name="projet">
+                <option value="Site vitrine">Site vitrine</option>
+                <option value="Application web">Application web</option>
+                <option value="API / back-end">API / back-end</option>
+                <option value="Reprise d'un projet existant">Reprise d'un projet existant</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-msg">Message</label>
+              <textarea id="f-msg" name="message" rows="5" required placeholder="Ce que vous voulez construire, et pour quand."></textarea>
+              <span class="field__error" data-error-for="f-msg"></span>
+            </div>
+            <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button class="btn btn--solid form__submit" type="submit" data-magnetic>
+              <span class="form__submit-label">Envoyer le message</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+            <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <span>© <span id="year">2026</span> Dylan Amougui</span>
+        <span class="footer__loc">Disponible en remote</span>
+        <a href="#top">Retour en haut ↑</a>
+      </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

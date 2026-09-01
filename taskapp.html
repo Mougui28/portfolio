@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Taskapp — Étude de cas | Dylan Amougui</title>
+    <meta
+      name="description"
+      content="Étude de cas Taskapp : une application de gestion de tâches construite en deux dépôts séparés, une API Laravel adossée à MySQL et un client React monté sur Vite."
+    />
+    <meta name="theme-color" content="#08090b" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Taskapp — Étude de cas | Dylan Amougui" />
+    <meta
+      property="og:description"
+      content="Architecture découplée API / client : Laravel, MySQL, Docker, React, Vite."
+    />
+    <meta property="og:image" content="assets/case-arch.webp" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* ---- Page étude de cas ---- */
+      .case-hero {
+        padding-block: clamp(var(--space-20), 12vw, var(--space-32)) var(--space-12);
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        transition: color var(--transition-interactive), gap var(--transition-interactive);
+      }
+      .back-link:hover {
+        color: var(--accent);
+        gap: var(--space-3);
+      }
+      .case-hero h1 {
+        margin-top: var(--space-6);
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: 600;
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        max-width: 18ch;
+      }
+      .case-hero h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .case-hero__lede {
+        margin-top: var(--space-6);
+        max-width: 58ch;
+        font-size: var(--text-base);
+        color: var(--text-muted);
+      }
+
+      .case-facts {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border-block: 1px solid var(--border);
+        margin-top: var(--space-12);
+      }
+      .case-facts div {
+        background: var(--bg);
+        padding: var(--space-5) var(--space-6) var(--space-6);
+      }
+      .case-facts dt {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+      }
+      .case-facts dd {
+        margin-top: var(--space-2);
+        font-size: var(--text-sm);
+        color: var(--text);
+      }
+
+      .case-figure {
+        margin-block: clamp(var(--space-12), 6vw, var(--space-20));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--surface);
+      }
+      .case-figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .case-figure figcaption {
+        padding: var(--space-4) var(--space-6);
+        border-top: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+      }
+
+      .case-body {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
+        gap: clamp(var(--space-8), 5vw, var(--space-16));
+        padding-block: clamp(var(--space-10), 5vw, var(--space-16));
+        border-top: 1px solid var(--border);
+      }
+      .case-body:first-of-type {
+        border-top: 0;
+      }
+      .case-body > h2 {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        position: sticky;
+        top: 110px;
+        align-self: start;
+      }
+      .case-body p {
+        color: var(--text-muted);
+        max-width: 68ch;
+      }
+      .case-body p + p {
+        margin-top: var(--space-5);
+      }
+      .case-body strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .case-body h3 {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: var(--space-3);
+      }
+      .case-body h3:not(:first-child) {
+        margin-top: var(--space-10);
+      }
+
+      .steps {
+        list-style: none;
+        padding: 0;
+        counter-reset: step;
+        display: grid;
+        gap: var(--space-5);
+        margin-top: var(--space-6);
+      }
+      .steps li {
+        position: relative;
+        padding-left: var(--space-10);
+        color: var(--text-muted);
+        max-width: 66ch;
+      }
+      .steps li::before {
+        counter-increment: step;
+        content: counter(step, decimal-leading-zero);
+        position: absolute;
+        left: 0;
+        top: 0.1em;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--accent);
+      }
+      .steps b {
+        display: block;
+        color: var(--text);
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+      }
+
+      .codeblock {
+        margin-top: var(--space-6);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+        overflow: hidden;
+      }
+      .codeblock__bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-5);
+        border-bottom: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-faint);
+      }
+      .codeblock pre {
+        margin: 0;
+        padding: var(--space-5);
+        overflow-x: auto;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        line-height: 1.75;
+        color: var(--text-muted);
+      }
+      .codeblock .c-key {
+        color: var(--accent);
+      }
+      .codeblock .c-com {
+        color: var(--text-faint);
+      }
+
+      .learned {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-6);
+        margin-top: var(--space-6);
+      }
+      .learned div {
+        border-left: 2px solid var(--border-strong);
+        padding-left: var(--space-5);
+      }
+      .learned b {
+        display: block;
+        color: var(--text);
+        font-weight: 500;
+        margin-bottom: var(--space-2);
+      }
+      .learned p {
+        font-size: var(--text-sm);
+      }
+
+      .case-next {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-6);
+        padding-block: clamp(var(--space-12), 6vw, var(--space-20));
+        border-top: 1px solid var(--border);
+      }
+      .case-next h2 {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 600;
+        line-height: 1.14;
+        letter-spacing: -0.02em;
+        max-width: 16ch;
+      }
+      .case-next__cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+
+      @media (max-width: 940px) {
+        .case-facts {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .case-body {
+          grid-template-columns: 1fr;
+          gap: var(--space-6);
+        }
+        .case-body > h2 {
+          position: static;
+        }
+        .learned {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 560px) {
+        .case-facts {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div class="scroll-progress" aria-hidden="true"><span id="progressBar"></span></div>
+    <canvas id="fieldCanvas" class="field-canvas" aria-hidden="true"></canvas>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="header" id="header">
+      <div class="header__inner">
+        <a class="brand" href="index.html" aria-label="Dylan Amougui — accueil">
+          <svg class="brand__mark" width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M6 26V6h7.5c6.9 0 11 3.8 11 10s-4.1 10-11 10H6Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" />
+            <path d="M13 11.5 17.5 16 13 20.5" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="brand__text">Dylan<span class="brand__dot">.</span>A</span>
+        </a>
+
+        <nav class="nav" aria-label="Navigation principale">
+          <a href="index.html#projets">Projets</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#stack">Stack</a>
+          <a href="index.html#parcours">Parcours</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <div class="header__actions">
+          <button class="icon-btn" data-theme-toggle type="button" aria-label="Passer en mode clair"></button>
+          <a class="btn btn--ghost header__cta" href="index.html#contact" data-magnetic>Me contacter</a>
+          <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </div>
+      <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
+        <a href="index.html#projets">Projets</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#stack">Stack</a>
+        <a href="index.html#parcours">Parcours</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="case-hero">
+        <div class="wrap">
+          <a class="back-link" href="index.html#projets">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+            Retour aux projets
+          </a>
+
+          <h1><span data-scramble>Taskapp</span><br /><em data-scramble>étude de cas</em></h1>
+
+          <p class="case-hero__lede">
+            Une application de gestion de tâches construite volontairement en deux projets
+            séparés : une API Laravel adossée à MySQL d'un côté, un client React monté sur Vite de
+            l'autre. Voici pourquoi ce découpage, et ce qu'il change concrètement.
+          </p>
+
+          <dl class="case-facts">
+            <div><dt>Rôle</dt><dd>Conception &amp; développement full-stack</dd></div>
+            <div><dt>Année</dt><dd>Projet en cours</dd></div>
+            <div><dt>Dépôts</dt><dd>2 (API + client)</dd></div>
+            <div><dt>Stack</dt><dd>Laravel · MySQL · Docker · React · Vite</dd></div>
+          </dl>
+
+          <figure class="case-figure reveal">
+            <img
+              src="assets/case-arch.webp"
+              alt="Schéma isométrique montrant un client React relié par des flux de données à une couche d'API, puis à une base MySQL, le tout dans un conteneur Docker"
+              width="1400"
+              height="933"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              Architecture générale : le client ne parle jamais à la base, uniquement à l'API.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div class="wrap">
+        <section class="case-body">
+          <h2>Le problème</h2>
+          <div>
+            <p>
+              Une application de tâches paraît simple vue de loin : une liste, une case à cocher.
+              La difficulté arrive plus tard — quand il faut filtrer, trier, gérer plusieurs
+              utilisateurs, garder l'historique et faire évoluer le schéma sans casser l'existant.
+            </p>
+            <p>
+              Le piège classique est de tout mélanger dans un seul projet, avec des requêtes SQL
+              posées directement dans les pages. Ça marche pendant deux semaines. Ensuite, chaque
+              modification de la base impose de fouiller partout dans le code, et
+              <strong>rien n'est testable isolément</strong>.
+            </p>
+            <p>
+              J'ai donc décidé de traiter Taskapp comme deux produits distincts qui communiquent par
+              contrat, plutôt que comme un bloc unique.
+            </p>
+          </div>
+        </section>
+
+        <section class="case-body" id="api">
+          <h2>L'API</h2>
+          <div>
+            <h3>Laravel, MySQL, Docker</h3>
+            <p>
+              Le back-end est une API REST en Laravel. Il ne rend aucune page : il expose des
+              ressources en JSON et applique les règles métier. Les données vivent dans MySQL, et
+              chaque évolution du schéma passe par une <strong>migration versionnée</strong>, donc
+              rejouable à l'identique sur n'importe quelle machine.
+            </p>
+            <ol class="steps" role="list">
+              <li>
+                <b>Modélisation relationnelle</b>
+                Les tables et leurs relations sont définies avant d'écrire la moindre ligne
+                d'interface. Les contraintes vivent dans la base, pas dans le JavaScript.
+              </li>
+              <li>
+                <b>Couche Eloquent</b>
+                L'ORM de Laravel encapsule les requêtes. Le code métier manipule des objets, pas
+                des chaînes SQL concaténées à la main.
+              </li>
+              <li>
+                <b>Conteneurisation</b>
+                Un Dockerfile décrit l'environnement complet. « Ça marche chez moi » cesse d'être
+                un argument : l'image est identique en local et en production.
+              </li>
+              <li>
+                <b>Tests PHPUnit</b>
+                Les endpoints sont couverts par des tests automatisés, ce qui permet de refactorer
+                sans prier.
+              </li>
+            </ol>
+
+            <div class="codeblock">
+              <div class="codeblock__bar">routes/api.php — forme du contrat exposé</div>
+              <pre><span class="c-com">// Le client ne connaît que ces routes, jamais la structure SQL.</span>
+<span class="c-key">Route</span>::apiResource('tasks', TaskController::class);
+
+<span class="c-com">// GET    /api/tasks        → liste filtrable</span>
+<span class="c-com">// POST   /api/tasks        → création (validée côté serveur)</span>
+<span class="c-com">// PATCH  /api/tasks/{id}   → mise à jour partielle</span>
+<span class="c-com">// DELETE /api/tasks/{id}   → suppression</span></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-body" id="client">
+          <h2>Le client</h2>
+          <div>
+            <h3>React monté sur Vite</h3>
+            <p>
+              Le front est un projet React indépendant, construit avec Vite. Le choix de Vite n'est
+              pas cosmétique : le rechargement à chaud garde l'état de l'interface pendant les
+              modifications, ce qui change réellement le rythme de développement quand on travaille
+              sur un board de tâches à plusieurs colonnes.
+            </p>
+            <p>
+              L'architecture de composants est pensée pour que le board reste lisible quand les
+              données arrivent en masse : découpage par responsabilité, pas par page. La qualité du
+              code est tenue par <strong>Oxlint</strong>, qui tourne assez vite pour être lancé à
+              chaque sauvegarde plutôt qu'une fois par semaine.
+            </p>
+            <p>
+              Comme le client ne dépend que du contrat de l'API, il peut être remplacé — par une
+              application mobile, par exemple — sans toucher une ligne du back-end.
+            </p>
+          </div>
+        </section>
+
+        <section class="case-body">
+          <h2>Résultat</h2>
+          <div>
+            <div class="learned">
+              <div>
+                <b>Deux cycles de vie indépendants</b>
+                <p>
+                  L'API et le client se déploient séparément. Une correction sur l'interface
+                  n'oblige pas à redéployer le serveur, et inversement.
+                </p>
+              </div>
+              <div>
+                <b>Un schéma qui se rejoue</b>
+                <p>
+                  Les migrations permettent de reconstruire une base propre en une commande, ce
+                  qui rend l'onboarding d'un nouveau développeur quasi immédiat.
+                </p>
+              </div>
+              <div>
+                <b>Des refactors sans peur</b>
+                <p>
+                  Les tests PHPUnit sur les endpoints donnent un filet de sécurité : si le contrat
+                  casse, on le sait avant le déploiement.
+                </p>
+              </div>
+              <div>
+                <b>Une base réutilisable</b>
+                <p>
+                  Ce socle API + client découplés est celui que je réemploie pour les projets
+                  clients : il s'adapte à un autre domaine métier sans être réécrit.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-body">
+          <h2>Ce que j'en retire</h2>
+          <div>
+            <p>
+              Séparer coûte un peu de temps au démarrage — deux dépôts, deux configurations, un
+              contrat à tenir. Ce coût est remboursé dès la première évolution un peu large du
+              modèle de données.
+            </p>
+            <p>
+              La leçon principale n'est pas technique : c'est de
+              <strong>décider tôt de ce que chaque partie a le droit de savoir</strong>. Le client
+              n'a pas à connaître la forme des tables. Le serveur n'a pas à connaître la forme des
+              écrans. Tout le reste en découle.
+            </p>
+          </div>
+        </section>
+
+        <section class="case-next">
+          <h2>Envie d'un projet construit comme ça&nbsp;?</h2>
+          <div class="case-next__cta">
+            <a class="btn btn--solid" href="index.html#contact" data-magnetic>Discutons-en</a>
+            <a class="btn btn--ghost" href="https://github.com/Mougui28/Taskapp" target="_blank" rel="noopener" data-magnetic>
+              Dépôt API
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="https://github.com/Mougui28/Taskapp_frotend" target="_blank" rel="noopener" data-magnetic>
+              Dépôt client
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <span>© <span id="year">2026</span> Dylan Amougui</span>
+        <span class="footer__loc">Disponible en remote</span>
+        <a href="#top">Retour en haut ↑</a>
+      </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
